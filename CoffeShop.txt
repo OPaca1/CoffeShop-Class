@@ -1,0 +1,70 @@
+class CoffeShopOrder: #Creating the Coffe Shop class and seting atributes
+    def __init__(self, DrinkType, DrinkSize, Milk_Option, Milk_Type, OrderID, CustomerName, ExtraShots, Temperature,base_Price ):
+        self.DrinkType = DrinkType
+        self.DrinkSize = DrinkSize
+        self.Milk_Option = Milk_Option
+        self.Milk_Type = Milk_Type
+        self.OrderID = OrderID
+        self.CustomerName = CustomerName
+        self.ExtraShots = ExtraShots
+        self.Temperature = Temperature
+        self.base_Price = base_Price
+ 
+    def add_shot(self): #method adds 1 to the extra shots variable
+        self.ExtraShots = self.ExtraShots + 1
+        return self.ExtraShots
+ 
+    def Make_Iced(self): # method turns hot into iced
+        self.Temperature = 'Iced'
+        return self.Temperature
+ 
+    def Change_Size(self, New_size: int): #method changes size from 1-3
+        self.DrinkSize = New_size
+        return New_size
+ 
+    def milkType(self): # uses the number provided 4 1 0 to set milk type to be used in the summary
+        if self.Milk_Type == 4:
+            return "Full fat"
+        if self.Milk_Type == 1:
+            return "Semi skimmed"
+        if self.Milk_Type == 0:
+            return "Fat free"
+ 
+    def drinkType(self): #uses the drinktype atribute to find the base price then set the price on the baseprice atribute
+        if self.DrinkType == 'Cappuccino':
+            self.base_Price = 2.20
+            return self.base_Price
+        if self.DrinkType == 'Americano':
+            self.base_Price = 1.80
+            return self.base_Price
+        if self.DrinkType == 'Latte':
+            self.base_Price = 2.00
+            return self.base_Price
+        if self.DrinkType == 'Mocha':
+            self.base_Price = 2.50
+            return self.base_Price
+        if self.DrinkType == 'Espresso':
+            self.base_Price = 1.50
+            return self.base_Price
+ 
+ 
+    def Price(self): #Calculates price, price = (size × base_price) + (extra_shots × £0.50). Formula copied from assignment brief
+        self.drinkType()
+        self.Size = self.DrinkSize * self.base_Price
+        self.Extra = self.ExtraShots * 0.50
+        self.Total = self.Size + self.Extra
+        return self.Total
+ 
+    def Summary(self):
+        return (f'Order ID: ({self.OrderID})' f' For Customer ({self.CustomerName})\n'
+            f'Drink: ({self.DrinkType})' f' Size ({self.DrinkSize})' f' Milk ({self.Milk_Option}) MilkType ({self.milkType()})'f' Extrashots ({self.ExtraShots})'f' Temperature ({self.Temperature})\n'
+            f'Total Price: £{self.Price():.2f}\n'# .2f sets it to 2 decial places when printing
+            )
+ 
+ 
+ 
+drink = CoffeShopOrder('Cappuccino', 2, 'oat', 1,123, 'Anon', 0, 'Hot', 0)
+drink.add_shot()
+drink.Make_Iced()
+drink.Change_Size(3)
+print(drink.Summary())
